@@ -14,7 +14,7 @@ const routes = [
       component: ArticleP
     },
 
-    // ИМПОРТИРУЙ КОМПОНЕНТ!!!!!!!!!!!!!!!!!!!!
+    // ИМПОРТ
 ]
 
 const router = createRouter( {

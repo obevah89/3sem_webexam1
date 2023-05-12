@@ -2,7 +2,7 @@
     <div class="footer">
         <div class="footer__wrapper d-flex">
             <h1 class="footer__heading">Лазарев Егор Дмитриевич 211-322</h1>
-            <a href="https://gitlab.com/B4R4N0VS/3sem_webexam" class="ml-12 warning border-bottom ">GIT</a>
+            <a href="https://github.com/obevah89/3sem_webexam1" class="ml-12 warning border-bottom ">GIT</a>
         </div>
     </div>
     

@@ -20,6 +20,9 @@
                     <li class="header__item">
                         <router-link class="header__link" to="/signIn">Войти</router-link>
                     </li>
+                    <li class="header__item">
+                        <div style="padding: 10px;"> лял{{ articlesJson }}</div>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -28,12 +31,25 @@
 </template>
 
 <script>
+
 import inputSearch from '@/components/inputSearch';
 
     export default {
+    data: () => ({
+        articlesJson: [],
+    }),
+    methods: {
+    showAllData() {
+        fetch("./articles.json")
+        .then(response => response.json())
+        .then(data => (this.articlesJson = data));
+
+    }
+    },
     components: {
         inputSearch
     }
+    
 }
 </script>
 

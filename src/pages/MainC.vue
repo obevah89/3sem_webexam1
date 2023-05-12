@@ -9,10 +9,31 @@
             </div>
             <h1 class="text-center mt-8" id="op">Лучшие цены на 2023 год</h1>
             <hr>
-            <SortComponent></SortComponent>
-            <div class="atricles__card-wrapper" id="op">
+            <SortComponent v-if="false"></SortComponent>
+            <div>
+                {{test}}
+                <v-text-field v-model.trim="search" label="Поиск по стране"/>
+                <v-select
+                    v-model="sort"
+                    :items="[
+                        {
+                            title: 'Стандартно',
+                            value: '',
+                        },
+                        {
+                            title: 'По дате (сначало старые)',
+                            value: 'min',
+                        },
+                        {
+                            title: 'По дате (сначало новые)',
+                            value: 'max',
+                        },
+                    ]"
+                ></v-select>
+            </div>      
+                <div class="atricles__card-wrapper" id="op">
                 
-                <div class="articles__list" v-for="article in allArticles" :key="article.id">
+                <div class="articles__list" v-for="article in sortArticle" :key="article.id">
                     <articleCard class="articles__item" :article="article">
                     </articleCard>
                 </div>
@@ -27,14 +48,38 @@
 import ActionButton from '@/components/ActionButton';
 import articleCard from "@/components/articleCard";
 import SortComponent from "@/components/SortComponent";
-    import { mapGetters, mapActions } from "vuex";
+    import { mapActions } from "vuex";
     export default {
             components: {
                 ActionButton,
                 articleCard,
                 SortComponent,
             },
-            computed: mapGetters(["allArticles"]),
+            data() {
+                return {
+                    sort: '',
+                    search: '',
+                }
+            },
+            computed: {
+                allArticles () {
+                    return this.$store.state.clothes.articles
+                },
+                searchArticlse() {
+                    return this.allArticles.filter((el) => el.name.toLowerCase().includes(this.search.toLowerCase()))
+                },
+                sortArticle() {
+                    if (this.sort === "min") {
+                        return [...this.searchArticlse].sort((a, b)  => new Date(a.date) < new Date(b.date) ? -1 : 1)
+                    }
+
+                    if (this.sort === "max") {
+                        return [...this.searchArticlse].sort((a, b)  => new Date(a.date) > new Date(b.date) ? -1 : 1)
+                    }
+                    
+                    return this.filtersArticlse
+                }
+            },
             methods: mapActions(['fetchPosts']),
             async mounted() {
                 this.fetchPosts()
